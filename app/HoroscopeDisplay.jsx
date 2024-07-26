@@ -1,28 +1,50 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-const horoscopes = {
-  aries: "Today is a great day to start something new.",
-  taurus: "You may find unexpected opportunities coming your way.",
-  gemini: "Communication is key today.",
-  cancer: "Focus on home and family matters.",
-  leo: "Your charisma will shine today.",
-  virgo: "Pay attention to the details.",
-  libra: "Balance is important today.",
-  scorpio: "Embrace your passions.",
-  sagittarius: "Adventure is calling.",
-  capricorn: "Hard work will pay off.",
-  aquarius: "Innovative ideas will come to you.",
-  pisces: "Trust your intuition.",
-};
+import React, { useEffect, useState } from 'react';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
 const HoroscopeDisplay = ({ sign }) => {
+  const [horoscope, setHoroscope] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!sign) return;
+
+    const fetchHoroscope = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(`http://localhost:5058/${sign}`);
+        const data = await response.json();
+        if (response.ok) {
+          setHoroscope(data["text"]);
+        } else {
+          setError(data["text"] || 'Failed to fetch horoscope (error message)');
+        }
+      } catch (err) {
+        setError('Failed to fetch horoscope (error fetching)');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHoroscope();
+  }, [sign]);
+
   if (!sign) return <Text>Please select a sign to get your horoscope.</Text>;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Your Horoscope for {sign.charAt(0).toUpperCase() + sign.slice(1)}:</Text>
-      <Text style={styles.horoscope}>{horoscopes[sign]}</Text>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : error ? (
+        <Text style={styles.error}>{error}</Text>
+      ) : (
+        <>
+          <Text style={styles.header}>Your Horoscope for {sign.charAt(0).toUpperCase() + sign.slice(1)}:</Text>
+          <Text style={styles.horoscope}>{horoscope}</Text>
+        </>
+      )}
     </View>
   );
 };
@@ -38,6 +60,10 @@ const styles = StyleSheet.create({
   },
   horoscope: {
     fontSize: 18,
+  },
+  error: {
+    fontSize: 18,
+    color: 'red',
   },
 });
 
