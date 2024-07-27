@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const HoroscopeDisplay = ({ sign }) => {
   const [horoscope, setHoroscope] = useState('');
@@ -16,10 +16,11 @@ const HoroscopeDisplay = ({ sign }) => {
       try {
         const response = await fetch(`http://localhost:5058/${sign}`);
         const data = await response.json();
+
         if (response.ok) {
-          setHoroscope(data["text"]);
+          setHoroscope(data.text);
         } else {
-          setError(data["text"] || 'Failed to fetch horoscope (error message)');
+          setError(data.message || 'Failed to fetch horoscope');
         }
       } catch (err) {
         setError('Failed to fetch horoscope (error fetching)');
@@ -31,40 +32,54 @@ const HoroscopeDisplay = ({ sign }) => {
     fetchHoroscope();
   }, [sign]);
 
-  if (!sign) return <Text>Please select a sign to get your horoscope.</Text>;
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text style={styles.error}>{error}</Text>;
+  }
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : error ? (
-        <Text style={styles.error}>{error}</Text>
-      ) : (
-        <>
-          <Text style={styles.header}>Your Horoscope for {sign.charAt(0).toUpperCase() + sign.slice(1)}:</Text>
-          <Text style={styles.horoscope}>{horoscope}</Text>
-        </>
-      )}
+      <Text style={styles.header}>Your Horoscope for {sign.charAt(0).toUpperCase() + sign.slice(1)}:</Text>
+      <Text style={styles.horoscope}>{horoscope}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    margin: 20,
+    padding: 20,
   },
   header: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 10,
+    color: '#ffffff', 
+    textAlign: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 10,
+    borderRadius: 10,
   },
   horoscope: {
     fontSize: 18,
+    color: '#ffffff', 
+    textAlign: 'center',
+    marginTop: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 10,
+    borderRadius: 10,
   },
   error: {
     fontSize: 18,
     color: 'red',
+    textAlign: 'center',
   },
 });
 
 export default HoroscopeDisplay;
+
+// uri: `http://localhost:5058/${imageUrl}`
+// `http://localhost:5058/${sign}`
+// setImageUrl(data.pathToImage);
+// setHoroscope(data.text);

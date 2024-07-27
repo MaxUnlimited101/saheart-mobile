@@ -42,7 +42,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 18,
-    marginBottom: 10,
+    color: '#ffffff', 
+    textAlign: 'center',
+    margin: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 10,
+    borderRadius: 10,
   },
   picker: {
     height: 50,
