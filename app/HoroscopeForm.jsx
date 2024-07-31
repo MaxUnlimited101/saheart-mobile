@@ -14,7 +14,7 @@ const HoroscopeForm = ({ onSubmit }) => {
       <Text style={styles.label}>Select Your Zodiac Sign:</Text>
       <Picker
         selectedValue={sign}
-        style={Platform.select({android:{}, default: styles.picker})}
+        style={Platform.select({android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker})}
         onValueChange={(itemValue) => setSign(itemValue)}
       >
         <Picker.Item label="--Choose a Sign--" value="" />
@@ -53,7 +53,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: '100%',
     marginBottom: 20,
+    backgroundColor: '#ffffff',
   },
+  pickerMobile: {
+    backgroundColor: '#ffffff',
+    marginBottom: 20,
+  }
 });
 
 export default HoroscopeForm;

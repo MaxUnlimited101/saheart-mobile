@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import HoroscopeForm from './HoroscopeForm';
-import HoroscopeDisplay from './HoroscopeDisplay';
+import HoroscopeDisplay, { serverUrl } from './HoroscopeDisplay';
 import { ImageBackground } from 'react-native';
+
+
 
 const App = () => {
   const [selectedSign, setSelectedSign] = useState('');
@@ -15,7 +17,7 @@ const App = () => {
     setSelectedSign(sign);
 
     try {
-      const response = await fetch(`http://localhost:5058/cancer`);
+      const response = await fetch(`${serverUrl}/cancer`);
       const data = await response.json();
 
       if (response.ok) {
@@ -39,7 +41,7 @@ const App = () => {
   }
 
   return (
-    <ImageBackground source={{ uri: `http://localhost:5058/${backgroundUrl}` }} style={styles.backgroundImage}>
+    <ImageBackground source={{ uri: `${serverUrl}/${backgroundUrl}` }} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Horoscope Predictions</Text>
         <HoroscopeForm onSubmit={handleFormSubmit} />

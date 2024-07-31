@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+export const serverUrl = 'https://saheart-server-img-5hsrtnwzea-ey.a.run.app';
+
 const HoroscopeDisplay = ({ sign }) => {
   const [horoscope, setHoroscope] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,7 +16,7 @@ const HoroscopeDisplay = ({ sign }) => {
       setError(null);
 
       try {
-        const response = await fetch(`http://localhost:5058/${sign}`);
+        const response = await fetch(`${serverUrl}/${sign}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -78,8 +80,3 @@ const styles = StyleSheet.create({
 });
 
 export default HoroscopeDisplay;
-
-// uri: `http://localhost:5058/${imageUrl}`
-// `http://localhost:5058/${sign}`
-// setImageUrl(data.pathToImage);
-// setHoroscope(data.text);
