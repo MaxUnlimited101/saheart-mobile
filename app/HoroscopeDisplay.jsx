@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 export const serverUrl = 'https://saheart-server-img-5hsrtnwzea-ey.a.run.app';
 
-const HoroscopeDisplay = ({ sign }) => {
+const HoroscopeDisplay = ({ sign, setBackgroundImageUrl }) => {
   const [horoscope, setHoroscope] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,12 +15,16 @@ const HoroscopeDisplay = ({ sign }) => {
       setLoading(true);
       setError(null);
 
+      const today = new Date();
+      const currentDate = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0'); // Get current date in YYYY-MM-DD format
+      
       try {
-        const response = await fetch(`${serverUrl}/${sign}`);
+        const response = await fetch(`${serverUrl}/${sign}?date=${currentDate}`);
         const data = await response.json();
 
         if (response.ok) {
           setHoroscope(data.text);
+          setBackgroundImageUrl(data.pathToImage)
         } else {
           setError(data.message || 'Failed to fetch horoscope');
         }

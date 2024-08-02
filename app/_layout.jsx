@@ -10,26 +10,11 @@ const App = () => {
   const [selectedSign, setSelectedSign] = useState('');
   const [backgroundUrl, setBackgroundUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleFormSubmit = async (sign) => {
     setLoading(true);
     setSelectedSign(sign);
-
-    try {
-      const response = await fetch(`${serverUrl}/cancer`);
-      const data = await response.json();
-
-      if (response.ok) {
-        setBackgroundUrl(data.pathToImage);
-      } else {
-        setError(data.message || 'Failed to fetch background image');
-      }
-    } catch (err) {
-      setError('Failed to fetch horoscope (error fetching)');
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
   };
 
   if (loading) {
@@ -39,13 +24,13 @@ const App = () => {
       </View>
     );
   }
-
+  
   return (
-    <ImageBackground source={{ uri: `${serverUrl}/${backgroundUrl}` }} style={styles.backgroundImage}>
+    <ImageBackground source={{ uri: `${serverUrl}${backgroundUrl}` }} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Horoscope Predictions</Text>
         <HoroscopeForm onSubmit={handleFormSubmit} />
-        {selectedSign && <HoroscopeDisplay sign={selectedSign} />}
+        {selectedSign && <HoroscopeDisplay sign={selectedSign} setBackgroundImageUrl={setBackgroundUrl} />}
       </SafeAreaView>
     </ImageBackground>
   );
