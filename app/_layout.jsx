@@ -28,7 +28,6 @@ const App = () => {
   return (
     <ImageBackground source={{ uri: `${serverUrl}${backgroundUrl}` }} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Horoscope Predictions</Text>
         <HoroscopeForm onSubmit={handleFormSubmit} />
         {selectedSign && <HoroscopeDisplay sign={selectedSign} setBackgroundImageUrl={setBackgroundUrl} />}
       </SafeAreaView>
