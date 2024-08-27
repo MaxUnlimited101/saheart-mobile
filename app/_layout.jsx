@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { ScrollView, SafeAreaView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import HoroscopeForm from './HoroscopeForm';
 import HoroscopeDisplay, { serverUrl } from './HoroscopeDisplay';
 import { ImageBackground } from 'react-native';
@@ -27,10 +27,13 @@ const App = () => {
   
   return (
     <ImageBackground source={{ uri: `${serverUrl}${backgroundUrl}` }} style={styles.backgroundImage}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <HoroscopeForm onSubmit={handleFormSubmit} />
+      </View>
+      <ScrollView style={styles.containerVisualStyle} contentContainerStyle={styles.contentContainerStyle} 
+        persistentScrollbar={true} /*<--only for android*/>
         {selectedSign && <HoroscopeDisplay sign={selectedSign} setBackgroundImageUrl={setBackgroundUrl} />}
-      </SafeAreaView>
+      </ScrollView>
     </ImageBackground>
   );
 };
@@ -42,10 +45,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    flex: 1,
+    flex: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 0,
+    margin: 0,
+  },
+  contentContainerStyle:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  },
+  containerVisualStyle:{
+    flex: 1,
+    padding: 5,
   },
   title: {
     fontSize: 24,
