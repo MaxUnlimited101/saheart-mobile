@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "saheart-mobile",
-    "slug": "saheart-mobile",
-    "version": "1.2.0",
+    "name": "Saheart Horoscope",
+    "slug": "saheart-horoscope",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
