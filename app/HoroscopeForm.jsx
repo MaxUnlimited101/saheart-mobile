@@ -4,13 +4,26 @@ import { Picker } from '@react-native-picker/picker';
 
 const HoroscopeForm = ({ onSubmit }) => {
   const [sign, setSign] = useState("");
+  const [lang, setLang] = useState("");
 
   const handleSubmit = () => {
-    onSubmit(sign);
+    onSubmit(sign, lang);
   };
   
   return (
     <View style={styles.container}>
+      <Text style={styles.label}>Select your preferred language:</Text>
+      <Picker
+        selectedValue={lang}
+        style={Platform.select({android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker})}
+        onValueChange={(itemValue) => setLang(itemValue)}
+      >
+        <Picker.Item label="--Choose a language--" value="" />
+        <Picker.Item label="English" value="eng" />
+        <Picker.Item label="Ukrainian" value="ukr" />
+        <Picker.Item label="Russian" value="rus" />
+      </Picker>
+
       <Text style={styles.label}>Select Your Zodiac Sign:</Text>
       <Picker
         selectedValue={sign}

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export const serverUrl = 'https://saheart-server-img-5hsrtnwzea-ey.a.run.app';
+export const serverUrl = 'https://saheart-server-img-374117605936.europe-west3.run.app';
+//export const serverUrl = 'http://localhost:8080';
 
-const HoroscopeDisplay = ({ sign, setBackgroundImageUrl }) => {
+const HoroscopeDisplay = ({ sign, lang, setBackgroundImageUrl }) => {
   const [horoscope, setHoroscope] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!sign) return;
+    if (!lang) return;
 
     const fetchHoroscope = async () => {
       setLoading(true);
@@ -19,7 +21,7 @@ const HoroscopeDisplay = ({ sign, setBackgroundImageUrl }) => {
       const currentDate = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0'); // Get current date in YYYY-MM-DD format
       
       try {
-        const response = await fetch(`${serverUrl}/${sign}?date=${currentDate}`);
+        const response = await fetch(`${serverUrl}/${lang}/${sign}?date=${currentDate}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -36,7 +38,7 @@ const HoroscopeDisplay = ({ sign, setBackgroundImageUrl }) => {
     };
 
     fetchHoroscope();
-  }, [sign]);
+  }, [sign, lang]);
 
   if (loading) {
     return <Text>Loading...</Text>;

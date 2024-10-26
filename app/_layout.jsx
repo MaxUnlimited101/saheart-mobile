@@ -8,12 +8,14 @@ import { ImageBackground } from 'react-native';
 
 const App = () => {
   const [selectedSign, setSelectedSign] = useState('');
+  const [selectedLang, setSelectedLang] = useState('');
   const [backgroundUrl, setBackgroundUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleFormSubmit = async (sign) => {
+  const handleFormSubmit = async (sign, lang) => {
     setLoading(true);
     setSelectedSign(sign);
+    setSelectedLang(lang);
     setLoading(false);
   };
 
@@ -25,14 +27,22 @@ const App = () => {
     );
   }
   
+  let disp = <></>;
+  if (selectedSign && selectedLang) 
+  { 
+    disp = <HoroscopeDisplay sign={selectedSign} lang={selectedLang} setBackgroundImageUrl={setBackgroundUrl} />;
+  }
+
   return (
     <ImageBackground source={{ uri: `${serverUrl}${backgroundUrl}` }} style={styles.backgroundImage}>
       <View style={styles.container}>
         <HoroscopeForm onSubmit={handleFormSubmit} />
       </View>
       <ScrollView style={styles.containerVisualStyle} contentContainerStyle={styles.contentContainerStyle} 
-        persistentScrollbar={true} /*<--only for android*/>
-        {selectedSign && <HoroscopeDisplay sign={selectedSign} setBackgroundImageUrl={setBackgroundUrl} />}
+        persistentScrollbar={true} /*<--only for android*/ >
+        <View>
+          {disp}
+        </View>
       </ScrollView>
     </ImageBackground>
   );
@@ -45,7 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    flex: 0.5,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 0,
