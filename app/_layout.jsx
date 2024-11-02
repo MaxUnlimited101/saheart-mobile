@@ -4,8 +4,6 @@ import HoroscopeForm from './HoroscopeForm';
 import HoroscopeDisplay, { serverUrl } from './HoroscopeDisplay';
 import { ImageBackground } from 'react-native';
 
-
-
 const App = () => {
   const [selectedSign, setSelectedSign] = useState('');
   const [selectedLang, setSelectedLang] = useState('');
@@ -26,19 +24,18 @@ const App = () => {
       </View>
     );
   }
-  
+
   let disp = <></>;
-  if (selectedSign && selectedLang) 
-  { 
+  if (selectedSign && selectedLang) {
     disp = <HoroscopeDisplay sign={selectedSign} lang={selectedLang} setBackgroundImageUrl={setBackgroundUrl} />;
   }
 
   return (
     <ImageBackground source={{ uri: `${serverUrl}${backgroundUrl}` }} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <HoroscopeForm onSubmit={handleFormSubmit} />
+        <HoroscopeForm sign={selectedSign} lang={selectedLang} setLang={setSelectedLang} setSign={setSelectedSign} />
       </View>
-      <ScrollView style={styles.containerVisualStyle} contentContainerStyle={styles.contentContainerStyle} 
+      <ScrollView style={styles.containerVisualStyle} contentContainerStyle={styles.contentContainerStyle}
         persistentScrollbar={true} /*<--only for android*/ >
         <View>
           {disp}
@@ -61,12 +58,12 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
-  contentContainerStyle:{
+  contentContainerStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-    
+
   },
-  containerVisualStyle:{
+  containerVisualStyle: {
     flex: 1,
     padding: 5,
   },

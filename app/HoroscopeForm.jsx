@@ -2,21 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const HoroscopeForm = ({ onSubmit }) => {
-  const [sign, setSign] = useState("");
-  const [lang, setLang] = useState("");
-
-  const handleSubmit = () => {
-    onSubmit(sign, lang);
-  };
-  
+const HoroscopeForm = ({ setSign, setLang, sign, lang }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Select your preferred language:</Text>
       <Picker
         selectedValue={lang}
-        style={Platform.select({android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker})}
-        onValueChange={(itemValue) => {setLang(itemValue); handleSubmit(); }}
+        style={Platform.select({ android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker })}
+        onValueChange={(itemValue) => { setLang(itemValue); }}
       >
         <Picker.Item label="--Language / Мова / Язык--" value="" />
         <Picker.Item label="English" value="eng" />
@@ -27,8 +20,8 @@ const HoroscopeForm = ({ onSubmit }) => {
       <Text style={styles.label}>Select Your Zodiac Sign:</Text>
       <Picker
         selectedValue={sign}
-        style={Platform.select({android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker})}
-        onValueChange={(itemValue) => {setSign(itemValue); handleSubmit(); }}
+        style={Platform.select({ android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker })}
+        onValueChange={(itemValue) => { setSign(itemValue); }}
       >
         <Picker.Item label="--Sign / Знак / Знак--" value="" />
         <Picker.Item label="Aries - Овен - Овен" value="aries" />
@@ -54,7 +47,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 18,
-    color: '#ffffff', 
+    color: '#ffffff',
     textAlign: 'center',
     margin: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
