@@ -16,35 +16,34 @@ const HoroscopeForm = ({ onSubmit }) => {
       <Picker
         selectedValue={lang}
         style={Platform.select({android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker})}
-        onValueChange={(itemValue) => setLang(itemValue)}
+        onValueChange={(itemValue) => {setLang(itemValue); handleSubmit(); }}
       >
-        <Picker.Item label="--Choose a language--" value="" />
+        <Picker.Item label="--Language / Мова / Язык--" value="" />
         <Picker.Item label="English" value="eng" />
-        <Picker.Item label="Ukrainian" value="ukr" />
-        <Picker.Item label="Russian" value="rus" />
+        <Picker.Item label="Українська" value="ukr" />
+        <Picker.Item label="Русский" value="rus" />
       </Picker>
 
       <Text style={styles.label}>Select Your Zodiac Sign:</Text>
       <Picker
         selectedValue={sign}
         style={Platform.select({android: styles.pickerMobile, ios: styles.pickerMobile, default: styles.picker})}
-        onValueChange={(itemValue) => setSign(itemValue)}
+        onValueChange={(itemValue) => {setSign(itemValue); handleSubmit(); }}
       >
-        <Picker.Item label="--Choose a Sign--" value="" />
-        <Picker.Item label="Aries" value="aries" />
-        <Picker.Item label="Taurus" value="taurus" />
-        <Picker.Item label="Gemini" value="gemini" />
-        <Picker.Item label="Cancer" value="cancer" />
-        <Picker.Item label="Leo" value="leo" />
-        <Picker.Item label="Virgo" value="virgo" />
-        <Picker.Item label="Libra" value="libra" />
-        <Picker.Item label="Scorpio" value="scorpio" />
-        <Picker.Item label="Sagittarius" value="sagittarius" />
-        <Picker.Item label="Capricorn" value="capricorn" />
-        <Picker.Item label="Aquarius" value="aquarius" />
-        <Picker.Item label="Pisces" value="pisces" />
+        <Picker.Item label="--Sign / Знак / Знак--" value="" />
+        <Picker.Item label="Aries - Овен - Овен" value="aries" />
+        <Picker.Item label="Taurus - Телець - Телец" value="taurus" />
+        <Picker.Item label="Gemini - Близнюки - Близнецы" value="gemini" />
+        <Picker.Item label="Cancer - Рак - Рак" value="cancer" />
+        <Picker.Item label="Leo - Лев - Лев" value="leo" />
+        <Picker.Item label="Virgo - Діва - Дева" value="virgo" />
+        <Picker.Item label="Libra - Ваги - Весы" value="libra" />
+        <Picker.Item label="Scorpio - Скорпіон - Скорпион" value="scorpio" />
+        <Picker.Item label="Sagittarius - Стрілець - Стрелец" value="sagittarius" />
+        <Picker.Item label="Capricorn - Козеріг - Козерог" value="capricorn" />
+        <Picker.Item label="Aquarius - Водолій - Водолей" value="aquarius" />
+        <Picker.Item label="Pisces - Риби - Рыбы" value="pisces" />
       </Picker>
-      <Button title="Get Horoscope" onPress={handleSubmit} />
     </View>
   );
 };

@@ -31,7 +31,7 @@ const HoroscopeDisplay = ({ sign, lang, setBackgroundImageUrl }) => {
           setError(data.message || 'Failed to fetch horoscope');
         }
       } catch (err) {
-        setError('Failed to fetch horoscope (error fetching)');
+        setError('Failed to fetch horoscope (error fetching). You should try updating this app!');
       } finally {
         setLoading(false);
       }
@@ -41,7 +41,7 @@ const HoroscopeDisplay = ({ sign, lang, setBackgroundImageUrl }) => {
   }, [sign, lang]);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <Text style={styles.lodaingLabel}>Loading...</Text>;
   }
 
   if (error) {
@@ -50,7 +50,7 @@ const HoroscopeDisplay = ({ sign, lang, setBackgroundImageUrl }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Your Horoscope for {sign.charAt(0).toUpperCase() + sign.slice(1)}:</Text>
+      <Text style={styles.header}>Prediction / Передбачення / Предсказание: </Text>
       <Text style={styles.horoscope}>{horoscope}</Text>
     </View>
   );
@@ -81,6 +81,11 @@ const styles = StyleSheet.create({
   error: {
     fontSize: 18,
     color: 'red',
+    textAlign: 'center',
+  },
+  lodaingLabel: {
+    fontSize: 18,
+    color: 'white',
     textAlign: 'center',
   },
 });
